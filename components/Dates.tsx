@@ -1,14 +1,27 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import useDates from '../pages/hooks/useDates';
+import { media } from '../styles';
 import Modal from './Modal';
 
 // Styles
-const Container = styled.li`
+const Container = styled.li<{
+  idx: number;
+  lastDate: number;
+  firstDate: number;
+}>`
   width: calc(100% / 7 - 2px);
   text-align: right;
   min-height: 3.5rem;
   border: 1px solid #bebebe;
+  transition: 0.12s;
+  cursor: pointer;
+
+  &:hover {
+    font-weight: bold;
+    background: #29c8f8;
+    color: white;
+  }
 
   &:nth-child(7n + 1) {
     color: #b33131;
@@ -16,6 +29,25 @@ const Container = styled.li`
 
   &:nth-child(7n) {
     color: #3b7ac2;
+  }
+
+  ${media.small} {
+    display: block;
+    width: 100%;
+    text-align: left;
+
+    ${(props) =>
+      props.idx < props.lastDate &&
+      css`
+        display: none;
+      `}
+
+    ${(props) =>
+      props.firstDate > 0 &&
+      props.idx > props.firstDate - 1 &&
+      css`
+        display: none;
+      `}
   }
 `;
 
@@ -30,15 +62,23 @@ const DateNum = styled.div<{
   ${(props) =>
     props.idx < props.lastDate &&
     css`
-      color: #969696;
+      display: none;
     `}
 
   ${(props) =>
     props.firstDate > 0 &&
     props.idx > props.firstDate - 1 &&
     css`
-      color: #969696;
+      display: none;
     `}
+
+  ${media.medium} {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0;
+    padding-left: 0.5rem;
+  }
 `;
 
 const Today = styled.span<{ findToday: number }>`
@@ -95,7 +135,12 @@ const Dates: React.FC<Props> = ({
 
   return (
     <>
-      <Container onClick={() => setOpenModal(true)}>
+      <Container
+        idx={id}
+        lastDate={lastDate}
+        firstDate={firstDate}
+        onClick={() => setOpenModal(true)}
+      >
         <DateNum
           idx={id}
           lastDate={lastDate}

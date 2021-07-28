@@ -6,6 +6,8 @@ import Dates from './Dates';
 const Container = styled.div`
   display: flex;
   flex-flow: row wrap;
+  width: 100%;
+  max-width: 1110px;
 `;
 
 interface Props {

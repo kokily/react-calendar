@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
+import { media } from '../styles';
 
 // Styles
 const Container = styled.div`
@@ -48,6 +49,13 @@ const Nav = styled.div`
       }
     }
   }
+
+  ${media.medium} {
+    .year {
+      font-size: 1.6rem;
+      margin-right: 1.5rem;
+    }
+  }
 `;
 
 const Days = styled.div`
@@ -65,6 +73,10 @@ const Days = styled.div`
     &:nth-child(7n) {
       color: #3b7ac2;
     }
+  }
+
+  ${media.medium} {
+    display: none;
   }
 `;
 
